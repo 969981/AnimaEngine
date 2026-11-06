@@ -106,8 +106,9 @@ GrFilePathList Gr_LoadDirectoryFiles(const char *dirPath) {
 }
 
 void Gr_UnloadDirectoryFiles(GrFilePathList list) {
-    FilePathList rl_list;
-    rl_list.capacity = list.count;
+    // FilePathList.capacity is not present in all supported raylib versions.
+    // The unload routine only needs the number of allocated paths and pointers.
+    FilePathList rl_list = {0};
     rl_list.count = list.count;
     rl_list.paths = list.paths;
     UnloadDirectoryFiles(rl_list);
