@@ -6,6 +6,13 @@ name: Sync upstream and release builds
 on:
   schedule:
     - cron: '17,47 * * * *'
+  # Also build when this workflow itself changes, allowing an immediate
+  # self-test after installation/fixes without waiting for the next cron.
+  # GitHub's GITHUB_TOKEN-generated mirror pushes don't cascade into extra runs.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/auto-sync-release.yml'
   workflow_dispatch:
 
 permissions:
